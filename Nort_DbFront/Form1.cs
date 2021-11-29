@@ -35,7 +35,7 @@ namespace Nort_DbFront
                          join prod in _dContext.Products on cat.CategoryId equals prod.CategoryId
                          //where prod.UnitPrice > 20
                          select new
-                         {
+                         { 
                              cat.CategoryName,
                              prod.ProductName,
                              prod.UnitPrice
