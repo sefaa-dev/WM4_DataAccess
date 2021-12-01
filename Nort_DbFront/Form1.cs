@@ -97,7 +97,7 @@ namespace Nort_DbFront
                          } into cats
                          select new
                          {
-                             CategoryName = cats.Key,
+                             CategoryName = cats.Key.CategoryName,
                              CompanyName = cats.Key.CompanyName,
                              Count = cats.Count()
                          };
