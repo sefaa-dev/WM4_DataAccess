@@ -81,6 +81,110 @@ namespace Nort_DbFront
                 .ToList();
 
             RaporuGoster();
+
+            var query6 = from cat in _dContext.Categories
+                         join prod in _dContext.Products on cat.CategoryId equals prod.CategoryId
+                         join sup in _dContext.Suppliers on prod.SupplierId equals sup.SupplierId
+                         group new
+                         {
+                             cat,
+                             prod,
+                             sup
+                         } by new
+                         {
+                             cat.CategoryName,
+                             sup.CompanyName
+                         } into cats
+                         select new
+                         {
+                             CategoryName = cats.Key,
+                             CompanyName = cats.Key.CompanyName,
+                             Count = cats.Count()
+                         };
+            dgvNorth.DataSource = query6
+                .OrderBy(x => x.CategoryName)
+                .ThenByDescending(x => x.Count)
+                .ToList();
+
+            var query7 = from cat in _dContext.Categories
+                         join prod in _dContext.Products on cat.CategoryId equals prod.CategoryId
+                         join sup in _dContext.Suppliers on prod.SupplierId equals sup.SupplierId
+                         group new
+                         {
+                             cat,
+                             prod,
+                             sup
+                         } by new
+                         {
+                             cat.CategoryName,
+                             sup.CompanyName
+                         } into cats
+                         select new
+                         {
+                             CategoryName = cats.Key.CategoryName,
+                             CompanyName = cats.Key.CompanyName,
+                             Cost = cats.Sum(x=>x.prod.UnitPrice * x.prod.UnitsInStock)
+                         };
+            dgvNorth.DataSource = query7
+                .OrderBy(x => x.CategoryName)
+                .ThenByDescending(x => x.Cost)
+                .ToList();
+
+            var query8 = _dContext.Products
+                .Include(x => x.Category)
+                .Include(x => x.Supplier)
+                .GroupBy(x => new { x.Category.CategoryName, x.Supplier.CompanyName })
+                .Select(x => new
+                {
+                    x.Key.CategoryName,
+                    x.Key.CompanyName,
+                    Cost = x.Sum(p => p.UnitsInStock * p.UnitPrice)
+                });
+            dgvNorth.DataSource = query8
+              .OrderBy(x => x.CategoryName)
+              .ThenByDescending(x => x.Cost)
+              .ToList();
+
+            //ProductName | Total Order
+
+            var query9 = _dContext.OrderDetails
+                .Include(x => x.Product)
+                .GroupBy(x => new { x.Product.ProductName })
+                .Select(x => new ProductNameTotalViewModel
+
+                {
+                    ProductName = x.Key.ProductName,
+                    Total = x.Sum(od => (decimal)(1 - od.Discount) * od.Quantity * od.UnitPrice)
+
+                })
+                .OrderByDescending(x => x.Total)
+                .ToList();
+
+            var query10 = from od in _dContext.OrderDetails
+                          join prod in _dContext.Products on od.ProductId equals prod.ProductId
+                          group new { od, prod } by new
+                          {
+                              prod.ProductName
+
+                          } into names
+                          orderby names.Key.ProductName ascending
+                          select new ProductNameTotalViewModel
+                          {
+                              ProductName = names.Key.ProductName,
+                              Total = names.Sum(x => (decimal)(1 - x.od.Discount) * x.od.Quantity * x.od.UnitPrice)
+                          };
+
+                
+
+
+
+
+
+
+
+
+
+
             Console.WriteLine();
         }
         private int _offset = 0, _pageSize = 10,_maxPage = 0;
@@ -120,7 +224,22 @@ namespace Nort_DbFront
                 _maxPage = (int)Math.Ceiling (query.Count()/Convert.ToDouble(_pageSize));
             }
 
-                var result = query
+
+
+            query.Count(x => x.UnitPrice < 20);
+            query.Sum(x => x.UnitPrice); 
+            query.Average(x => x.UnitPrice);
+            query.Max(x => x.UnitPrice);
+            query.Min(x => x.UnitPrice);
+
+            query.Any();
+
+            if (query.All(x=>x.CategoryName != "Beverages"))
+            {
+
+            }
+
+            var result = query
                .OrderBy(x => x.CategoryName)
                .Skip(_offset * _pageSize)
                .Take(_pageSize)
