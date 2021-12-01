@@ -96,7 +96,7 @@ namespace Nort_DbFront
         {
             if (_offset == 0) return;
             _offset--;
-            RaporuGoster(); 
+            RaporuGoster();  
             
 
             
