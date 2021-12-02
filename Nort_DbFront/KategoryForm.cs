@@ -38,7 +38,7 @@ namespace Nort_DbFront
             txtDescription.Text = _selectedCategory.Description;
         }
 
-        private void btnKaydet_Click(object sender, EventArgs e)  
+        private void btnKaydet_Click(object sender, EventArgs e)   
         {
             try
             {
