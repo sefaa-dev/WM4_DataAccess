@@ -165,7 +165,7 @@ namespace North_DbFirst
                     _dbContext.SaveChanges();
 
                     tran.Commit();
-                    MessageBox.Show($"{_sepet.Sum(x => x.AraToplam):c2} tutarındaki siparişiniz {order.OrderId} nolu siparişiniz başarıyla oluşturulmuştur");
+                    MessageBox.Show($"{_sepet.Sum(x => x.AraToplam) + order.Freight:c2} tutarındaki siparişiniz {order.OrderId} nolu siparişiniz başarıyla oluşturulmuştur");
                     _sepet = new List<SepetViewModel>();
                     SepetiDoldur();
                 }
