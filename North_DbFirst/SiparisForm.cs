@@ -177,6 +177,7 @@ namespace North_DbFirst
 
                     tran.Rollback();
                     MessageBox.Show("Sipariş işleminde bir hata oluştu" + ex.Message);
+                    _dbContext = new();
                 }
             }
         }
