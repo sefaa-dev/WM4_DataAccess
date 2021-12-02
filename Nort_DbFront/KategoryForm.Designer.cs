@@ -1,7 +1,7 @@
 ﻿
-namespace Nort_DbFront
+namespace North_DbFirst
 {
-    partial class KategoryForm
+    partial class KategoriForm
     {
         /// <summary>
         /// Required designer variable.
@@ -83,6 +83,7 @@ namespace Nort_DbFront
             this.btnGuncelle.TabIndex = 4;
             this.btnGuncelle.Text = "Guncelle";
             this.btnGuncelle.UseVisualStyleBackColor = true;
+            this.btnGuncelle.Click += new System.EventHandler(this.btnGuncelle_Click);
             // 
             // btnSil
             // 
@@ -92,6 +93,7 @@ namespace Nort_DbFront
             this.btnSil.TabIndex = 5;
             this.btnSil.Text = "Sil";
             this.btnSil.UseVisualStyleBackColor = true;
+            this.btnSil.Click += new System.EventHandler(this.btnSil_Click);
             // 
             // txtAra
             // 
@@ -118,7 +120,7 @@ namespace Nort_DbFront
             this.label2.TabIndex = 7;
             this.label2.Text = "Açıklama";
             // 
-            // KategoryForm
+            // KategoriForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -132,9 +134,9 @@ namespace Nort_DbFront
             this.Controls.Add(this.txtDescription);
             this.Controls.Add(this.txtKategoryName);
             this.Controls.Add(this.lstCategory);
-            this.Name = "KategoryForm";
+            this.Name = "KategoriForm";
             this.Text = "KategoryForm";
-            this.Load += new System.EventHandler(this.KategoryForm_Load);
+            this.Load += new System.EventHandler(this.KategoriForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

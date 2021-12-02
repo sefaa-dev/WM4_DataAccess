@@ -1,3 +1,4 @@
+using North_DbFirst;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Nort_DbFront
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new KategoryForm());
+            Application.Run(new KategoriForm());
         }
     }
 }
