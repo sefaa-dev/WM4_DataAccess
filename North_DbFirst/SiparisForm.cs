@@ -153,6 +153,9 @@ namespace North_DbFirst
 
                     foreach (var item in _sepet)
                     {
+                        if (item.Urun.ProductId == 1)
+                            throw new Exception("Çayi Satmıyoruz");
+
                         _dbContext.OrderDetails.Add(new OrderDetail
                         {
                             Discount = 0,
