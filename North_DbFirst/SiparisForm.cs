@@ -44,6 +44,8 @@ namespace North_DbFirst
                 _dbContext.Products.Where(predicate).OrderBy(x => x.ProductName).ToList();
         }
 
+        
+
         private void txtAra_TextChanged(object sender, EventArgs e)
         {
             string text = txtAra.Text.ToLower();

@@ -41,32 +41,31 @@ namespace North_DbFirst
 
 
         }
+        private List<Product> UrunAra(Func<Product, bool> predicate = null)
+        {
+            return predicate == null ? _dataContext.Products.OrderBy(x => x.ProductName).ToList() :
+                _dataContext.Products.Where(predicate).OrderBy(x => x.ProductName).ToList();
+        }
+
+
+
+        private void txtAra_TextChanged(object sender, EventArgs e)
+        {
+            string text = txtAra.Text.ToLower();
+            lstUrunler.DataSource = UrunAra(x => x.ProductName.ToLower().Contains(text));
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
             
         }
 
-        private void txtAra_TextChanged(object sender, EventArgs e)
-        {
-            txtAra.Text = txtAra.Text.ToUpper();
-            txtAra.SelectionStart = txtAra.Text.Length;
-            for (int i = 0; i < lstUrunler.Items.Count; i++)
-            {
-                if (lstUrunler.Items[i].ToString().Contains(txtAra.Text))
-                {
-                    lstUrunler.SetSelected(i, true);
-                    if (txtAra.Text=="")
-                    {
-                        lstUrunler.SetSelected(i, false);
-                    }
-                }
-                else
-                {
-                    lstUrunler.SetSelected(i, false);
-                }
+       
+        
+           
+                
 
-            }
+            
         }
     }
 }
