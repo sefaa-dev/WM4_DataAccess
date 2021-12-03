@@ -15,6 +15,6 @@ namespace North_DbFirst
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new SiparisForm());    
-        }
+        } 
     }
 }
