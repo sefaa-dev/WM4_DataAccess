@@ -36,7 +36,7 @@ namespace North_DbFirst
             cmbKargo.DisplayMember = "CompanyName";
 
             cmbMusteri.DataSource = _dataContext.Customers.ToList();
-            cmbMusteri.DisplayMember = "CustomerId";
+            cmbMusteri.DisplayMember = "CustomerId"; 
 
 
 
