@@ -30,8 +30,10 @@ namespace North_DbFirst
             lstProducts.DataSource = _dbContext.Products.OrderBy(x => x.ProductName).ToList();
 
             cmbEmployes.DataSource = _dbContext.Employees.OrderBy(x => x.FirstName).ThenBy(x => x.LastName).ToList();
+
             cmbShippers.DataSource = _dbContext.Shippers.ToList();
             cmbShippers.DisplayMember = "CompanyName";
+
             cmbCustomers.DataSource = _dbContext.Customers.OrderBy(x => x.CompanyName).ToList();
             cmbCustomers.DisplayMember = "CompanyName";
         }

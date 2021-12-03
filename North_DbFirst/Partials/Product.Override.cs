@@ -4,7 +4,7 @@
 	{
         public override string ToString()
         {
-            return $"{ProductName} - {UnitPrice:c2}";
+            return $"{ProductName.ToUpper()} - {UnitPrice:c2}";
         }
 	}
 }
