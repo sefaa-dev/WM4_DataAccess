@@ -68,4 +68,4 @@ namespace North_DbFirst
             
         }
     }
-}
+
