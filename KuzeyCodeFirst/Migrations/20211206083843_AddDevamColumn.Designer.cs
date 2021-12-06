@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KuzeyCodeFirst.Migrations
 {
     [DbContext(typeof(KuzeyContext))]
-    [Migration("20211206083218_AddStokMiktari")]
-    partial class AddStokMiktari
+    [Migration("20211206083843_AddDevamColumn")]
+    partial class AddDevamColumn
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -52,6 +52,9 @@ namespace KuzeyCodeFirst.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("DevamEtmiyorMu")
+                        .HasColumnType("bit");
 
                     b.Property<decimal>("Fiyat")
                         .HasPrecision(10, 2)

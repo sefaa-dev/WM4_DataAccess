@@ -19,7 +19,6 @@ namespace North_DbFirst
             InitializeComponent();
         }
         NorthwindContext _dbContext = new NorthwindContext();
-
         private void SiparisForm_Load(object sender, EventArgs e)
         {
             ListeyiDoldur();
@@ -27,46 +26,46 @@ namespace North_DbFirst
 
         private void ListeyiDoldur()
         {
-            lstProducts.DataSource = _dbContext.Products.OrderBy(x => x.ProductName).ToList();
-
-            cmbEmployes.DataSource = _dbContext.Employees.OrderBy(x => x.FirstName).ThenBy(x => x.LastName).ToList();
-
+            lstProducts.DataSource = UrunAra();
+            cmbEmployee.DataSource = _dbContext.Employees
+                .OrderBy(x => x.FirstName)
+                .ThenBy(x => x.LastName)
+                .ToList();
             cmbShippers.DataSource = _dbContext.Shippers.ToList();
             cmbShippers.DisplayMember = "CompanyName";
-
-            cmbCustomers.DataSource = _dbContext.Customers.OrderBy(x => x.CompanyName).ToList();
-            cmbCustomers.DisplayMember = "CompanyName";
+            cmbCustomer.DataSource = _dbContext.Customers
+                .OrderBy(x => x.CompanyName)
+                .ToList();
+            cmbCustomer.DisplayMember = "CompanyName";
         }
 
-        private List<Product> UrunAra(Func<Product, bool> predicate = null )
+        private List<Product> UrunAra(Func<Product, bool> predicate = null)
         {
             return predicate == null ? _dbContext.Products.OrderBy(x => x.ProductName).ToList() :
                 _dbContext.Products.Where(predicate).OrderBy(x => x.ProductName).ToList();
         }
-
-        
 
         private void txtAra_TextChanged(object sender, EventArgs e)
         {
             string text = txtAra.Text.ToLower();
             lstProducts.DataSource = UrunAra(x => x.ProductName.ToLower().Contains(text));
         }
-
         private List<SepetViewModel> _sepet = new List<SepetViewModel>();
         private void btnEkle_Click(object sender, EventArgs e)
         {
             if (lstProducts.SelectedItem == null) return;
+
             var urun = lstProducts.SelectedItem as Product;
+
             var sepetUrun = _sepet.FirstOrDefault(x => x.Urun.ProductId == urun.ProductId);
 
-            if(sepetUrun == null)
+            if (sepetUrun == null)
             {
                 _sepet.Add(new SepetViewModel
                 {
                     Urun = urun,
                     Adet = 1
                 });
-
             }
             else
             {
@@ -78,35 +77,36 @@ namespace North_DbFirst
         private void SepetiDoldur()
         {
             var toplamFiyat = _sepet.Sum(x => x.AraToplam);
-            lbToplam.Text = $"Toplam: {toplamFiyat:c2}";
+            lblToplam.Text = $"Toplam: {toplamFiyat:c2}";
 
-            lstCard.Columns.Clear();
-            lstCard.Items.Clear();
-            lstCard.MultiSelect = false;
-            lstCard.View = View.Details;
-            lstCard.FullRowSelect = true;
-            lstCard.Columns.Add("Adet");
-            lstCard.Columns.Add("Ürün");
-            lstCard.Columns.Add("Ara Toplam");
+            lstCart.Columns.Clear();
+            lstCart.Items.Clear();
+            lstCart.MultiSelect = false;
+            lstCart.View = View.Details;
+            lstCart.FullRowSelect = true;
+            lstCart.Columns.Add("Adet");
+            lstCart.Columns.Add("Ürün");
+            lstCart.Columns.Add("Ara Toplam");
 
-            foreach(var item in _sepet)
+            foreach (var item in _sepet)
             {
                 ListViewItem viewItem = new ListViewItem(item.Adet.ToString());
                 viewItem.Tag = item;
                 viewItem.SubItems.Add(item.Urun.ProductName);
                 viewItem.SubItems.Add($"{item.AraToplam:c2}");
-                lstCard.Items.Add(viewItem);
+                lstCart.Items.Add(viewItem);
             }
-            lstCard.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+
+            lstCart.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
 
         }
 
         private void btnAzalt_Click(object sender, EventArgs e)
         {
-            if (lstCard.SelectedItems.Count == 0) return;
+            if (lstCart.SelectedItems.Count == 0) return;
 
-            var secili = lstCard.SelectedItems[0].Tag as SepetViewModel;
-            if(secili.Adet == 1)
+            var secili = lstCart.SelectedItems[0].Tag as SepetViewModel;
+            if (secili.Adet == 1)
             {
                 _sepet.Remove(secili);
             }
@@ -119,22 +119,21 @@ namespace North_DbFirst
 
         private void btnArttır_Click(object sender, EventArgs e)
         {
-            if (lstCard.SelectedItems.Count == 0) return;
-
-            var secili = lstCard.SelectedItems[0].Tag as SepetViewModel;
+            if (lstCart.SelectedItems.Count == 0) return;
+            var secili = lstCart.SelectedItems[0].Tag as SepetViewModel;
             secili.Adet++;
             SepetiDoldur();
         }
 
-        private void btnOnayla_Click(object sender, EventArgs e)
+        private void btnOnay_Click(object sender, EventArgs e)
         {
             if (!_sepet.Any()) return;
-
             using (var tran = _dbContext.Database.BeginTransaction())
             {
-                var customer = cmbCustomers.SelectedItem as Customer;
-                var employee = cmbEmployes.SelectedItem as Employee;
+                var customer = cmbCustomer.SelectedItem as Customer;
+                var employee = cmbEmployee.SelectedItem as Employee;
                 var shipper = cmbShippers.SelectedItem as Shipper;
+
                 try
                 {
                     var order = new Order()
@@ -142,13 +141,13 @@ namespace North_DbFirst
                         CustomerId = customer?.CustomerId,
                         EmployeeId = employee?.EmployeeId,
                         ShipVia = shipper?.ShipperId,
-                        Freight = nFreight?.Value,
+                        Freight = nFreight.Value,
                         OrderDate = DateTime.Now,
-                        RequiredDate = dtpRDate.Value,
+                        RequiredDate = dtpRequiredDate.Value,
                         ShipAddress = txtShipAdress.Text,
                         ShipCity = txtShipCity.Text,
                         ShipName = txtShipName.Text,
-                        ShipPostalCode = txtPostalCode.Text,
+                        ShipPostalCode = txtShipPostalCode.Text,
                         ShipRegion = txtShipRagion.Text,
                         ShipCountry = txtShipCountry.Text
                     };
@@ -158,8 +157,7 @@ namespace North_DbFirst
                     foreach (var item in _sepet)
                     {
                         if (item.Urun.ProductId == 1)
-                            throw new Exception("Çayi Satmıyoruz");
-
+                            throw new Exception("Çayi satmıyoruz");
                         _dbContext.OrderDetails.Add(new OrderDetail
                         {
                             Discount = 0,
@@ -178,12 +176,12 @@ namespace North_DbFirst
                 }
                 catch (Exception ex)
                 {
-
                     tran.Rollback();
-                    MessageBox.Show("Sipariş işleminde bir hata oluştu" + ex.Message);
+                    MessageBox.Show("Sipariş işleminizde bir hata oluştu " + ex.Message);
                     _dbContext = new();
                 }
             }
+
         }
     }
 }
