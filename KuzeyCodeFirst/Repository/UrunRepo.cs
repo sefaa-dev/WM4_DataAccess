@@ -10,7 +10,7 @@ namespace KuzeyCodeFirst.Repository
             var eskiFiyat = (decimal)entry.OriginalValues["Fiyat"];
             //ürün fiyat geçmişi tablosuna eklenir/loglanır
              
-            base.Update(entity, isSavaLater);   
+            base.Update(entity, isSavaLater);    
         }
 
 
