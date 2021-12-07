@@ -26,6 +26,5 @@ namespace KuzeyCodeFirst.Models
 
         [ForeignKey(nameof(TedarikciId))]
         public Tedarikci Tedarikci { get; set; }
-        public object OriginalValues { get; internal set; }
     }
 }
