@@ -1,5 +1,6 @@
 ﻿using KuzeyCodeFirst.Data;
 using KuzeyCodeFirst.Models;
+using KuzeyCodeFirst.Repository;
 using System;
 using System.Linq;
 using System.Windows.Forms;
@@ -14,14 +15,24 @@ namespace KuzeyCodeFirst
         }
 
         private KuzeyContext _dbContext = new KuzeyContext();
+        private KategoriRepo _kategoriRepo = new KategoriRepo();
+        private SiparisRepo _siparisRepo = new SiparisRepo();
         private void btnEkle_Click(object sender, EventArgs e)
         {
-            _dbContext.Kategoriler.Add(new Kategori()
+            //_dbContext.Kategoriler.Add(new Kategori()
+            //{
+            //    Ad = "Kategori",
+            //    Aciklama = "açıklama"
+            //});
+            //_dbContext.SaveChanges();
+
+            var kategori = new Kategori()
             {
                 Ad = "Kategori",
                 Aciklama = "açıklama"
-            });
-            _dbContext.SaveChanges();
+            };
+            _kategoriRepo.Add(kategori);
+            
 
         }
 
@@ -37,6 +48,11 @@ namespace KuzeyCodeFirst
             var kategori = _dbContext.Kategoriler.First();
             _dbContext.Kategoriler.Remove(kategori);
             _dbContext.SaveChanges();
+        }
+
+        private void btnTedarikciEkle_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

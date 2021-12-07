@@ -15,6 +15,7 @@ namespace KuzeyCodeFirst.Models
         public string Ad { get; set; }
         [StringLength(200)]
         public string Aciklama { get; set; }
+  
 
         public ICollection<Urun> Urunler { get; set; } = new HashSet<Urun>();
     }

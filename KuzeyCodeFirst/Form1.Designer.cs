@@ -32,13 +32,15 @@ namespace KuzeyCodeFirst
             this.btnEkle = new System.Windows.Forms.Button();
             this.btnGuncelle = new System.Windows.Forms.Button();
             this.btnSil = new System.Windows.Forms.Button();
+            this.btnTedarikciEkle = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnEkle
             // 
-            this.btnEkle.Location = new System.Drawing.Point(12, 12);
+            this.btnEkle.Location = new System.Drawing.Point(10, 9);
+            this.btnEkle.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnEkle.Name = "btnEkle";
-            this.btnEkle.Size = new System.Drawing.Size(125, 96);
+            this.btnEkle.Size = new System.Drawing.Size(109, 72);
             this.btnEkle.TabIndex = 0;
             this.btnEkle.Text = "Ekle";
             this.btnEkle.UseVisualStyleBackColor = true;
@@ -46,9 +48,10 @@ namespace KuzeyCodeFirst
             // 
             // btnGuncelle
             // 
-            this.btnGuncelle.Location = new System.Drawing.Point(152, 12);
+            this.btnGuncelle.Location = new System.Drawing.Point(133, 9);
+            this.btnGuncelle.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnGuncelle.Name = "btnGuncelle";
-            this.btnGuncelle.Size = new System.Drawing.Size(125, 96);
+            this.btnGuncelle.Size = new System.Drawing.Size(109, 72);
             this.btnGuncelle.TabIndex = 0;
             this.btnGuncelle.Text = "Güncelle";
             this.btnGuncelle.UseVisualStyleBackColor = true;
@@ -56,22 +59,35 @@ namespace KuzeyCodeFirst
             // 
             // btnSil
             // 
-            this.btnSil.Location = new System.Drawing.Point(294, 12);
+            this.btnSil.Location = new System.Drawing.Point(257, 9);
+            this.btnSil.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSil.Name = "btnSil";
-            this.btnSil.Size = new System.Drawing.Size(125, 96);
+            this.btnSil.Size = new System.Drawing.Size(109, 72);
             this.btnSil.TabIndex = 0;
             this.btnSil.Text = "Sil";
             this.btnSil.UseVisualStyleBackColor = true;
             this.btnSil.Click += new System.EventHandler(this.btnSil_Click);
             // 
+            // btnTedarikciEkle
+            // 
+            this.btnTedarikciEkle.Location = new System.Drawing.Point(133, 114);
+            this.btnTedarikciEkle.Name = "btnTedarikciEkle";
+            this.btnTedarikciEkle.Size = new System.Drawing.Size(96, 91);
+            this.btnTedarikciEkle.TabIndex = 1;
+            this.btnTedarikciEkle.Text = "Tedarikçi Ekle";
+            this.btnTedarikciEkle.UseVisualStyleBackColor = true;
+            this.btnTedarikciEkle.Click += new System.EventHandler(this.btnTedarikciEkle_Click);
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(700, 338);
+            this.Controls.Add(this.btnTedarikciEkle);
             this.Controls.Add(this.btnSil);
             this.Controls.Add(this.btnGuncelle);
             this.Controls.Add(this.btnEkle);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -83,6 +99,7 @@ namespace KuzeyCodeFirst
         private System.Windows.Forms.Button btnEkle;
         private System.Windows.Forms.Button btnGuncelle;
         private System.Windows.Forms.Button btnSil;
+        private System.Windows.Forms.Button btnTedarikciEkle;
     }
 }
 

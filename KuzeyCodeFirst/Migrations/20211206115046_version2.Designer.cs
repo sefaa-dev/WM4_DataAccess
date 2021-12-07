@@ -4,14 +4,16 @@ using KuzeyCodeFirst.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace KuzeyCodeFirst.Migrations
 {
     [DbContext(typeof(KuzeyContext))]
-    partial class KuzeyContextModelSnapshot : ModelSnapshot
+    [Migration("20211206115046_version2")]
+    partial class version2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,38 +106,6 @@ namespace KuzeyCodeFirst.Migrations
                     b.ToTable("SiparisDetaylari");
                 });
 
-            modelBuilder.Entity("KuzeyCodeFirst.Models.Tedarikci", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FirmaAdi")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Telefon")
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Tedarikciler");
-                });
-
             modelBuilder.Entity("KuzeyCodeFirst.Models.Urun", b =>
                 {
                     b.Property<int>("Id")
@@ -170,17 +140,12 @@ namespace KuzeyCodeFirst.Migrations
                     b.Property<int>("StokMiktari")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("TedarikciId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.HasIndex("KategorId");
-
-                    b.HasIndex("TedarikciId");
 
                     b.ToTable("Urunler");
                 });
@@ -212,13 +177,7 @@ namespace KuzeyCodeFirst.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("KuzeyCodeFirst.Models.Tedarikci", "Tedarikci")
-                        .WithMany("Urunler")
-                        .HasForeignKey("TedarikciId");
-
                     b.Navigation("Kategori");
-
-                    b.Navigation("Tedarikci");
                 });
 
             modelBuilder.Entity("KuzeyCodeFirst.Models.Kategori", b =>
@@ -229,11 +188,6 @@ namespace KuzeyCodeFirst.Migrations
             modelBuilder.Entity("KuzeyCodeFirst.Models.Siparis", b =>
                 {
                     b.Navigation("SiparisDetaylari");
-                });
-
-            modelBuilder.Entity("KuzeyCodeFirst.Models.Tedarikci", b =>
-                {
-                    b.Navigation("Urunler");
                 });
 
             modelBuilder.Entity("KuzeyCodeFirst.Models.Urun", b =>
